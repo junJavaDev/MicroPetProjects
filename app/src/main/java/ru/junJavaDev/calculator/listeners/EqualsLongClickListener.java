@@ -18,7 +18,7 @@ public class EqualsLongClickListener implements View.OnLongClickListener {
             textView.setTextSize(25);
             textView.setGravity(Gravity.LEFT);
             textView.setText(R.string.eighty_eight);
-            Buttons.setUnClickable();
+//            buttons.setUnClickable();
         }
         return false;
     }

@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.method.ArrowKeyMovementMethod;
 import android.view.Gravity;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -32,36 +33,39 @@ public class MainActivity extends AppCompatActivity {
     public static TextView textView;
     public static boolean isCalculation;
     public static DecimalFormat decimalFormat;
+    Buttons buttons;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();   // Разобраться с этой ошибкой
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        buttons = new Buttons(this,
+                findViewById(R.id.btZero),
+                findViewById(R.id.btOne),
+                findViewById(R.id.btTwo),
+                findViewById(R.id.btThree),
+                findViewById(R.id.btFour),
+                findViewById(R.id.btFive),
+                findViewById(R.id.btSix),
+                findViewById(R.id.btSeven),
+                findViewById(R.id.btEight),
+                findViewById(R.id.btNine),
+                findViewById(R.id.btPositiveNegative),
+                findViewById(R.id.btDeciminalSeparator),
+                findViewById(R.id.btCleanEnd),
+                findViewById(R.id.btBackSpace));
 
         decimalFormat = new DecimalFormat("###########.#########");
-        Objects.requireNonNull(getSupportActionBar()).hide();   // Разобраться с этой ошибкой
 
-        setContentView(R.layout.activity_main);
 
         textView = findViewById(R.id.screenDisplay);
         textView.setMovementMethod(new ArrowKeyMovementMethod());
 
-        Button buttonZero = findViewById(R.id.btZero);
-        Button buttonOne = findViewById(R.id.btOne);
-        Button buttonTwo = findViewById(R.id.btTwo);
-        Button buttonThree = findViewById(R.id.btThree);
-        Button buttonFour = findViewById(R.id.btFour);
-        Button buttonFive = findViewById(R.id.btFive);
-        Button buttonSix = findViewById(R.id.btSix);
-        Button buttonSeven = findViewById(R.id.btSeven);
-        Button buttonEight = findViewById(R.id.btEight);
-        Button buttonNine = findViewById(R.id.btNine);
-        Button buttonPositiveNegative = findViewById(R.id.btPositiveNegative);
-        Button buttonDeciminalSeparator = findViewById(R.id.btDeciminalSeparator);
-        Button buttonCleanEnd = findViewById(R.id.btCleanEnd);
-        Button buttonBackSpace = findViewById(R.id.btBackSpace);
+
+
         Button buttonPlus = findViewById(R.id.btPlus);
         Button buttonMinus = findViewById(R.id.btMinus);
         Button buttonMultiply = findViewById(R.id.btMultiply);
@@ -73,15 +77,13 @@ public class MainActivity extends AppCompatActivity {
         Button buttonCleanAll = findViewById(R.id.btCleanAll);
         Button buttonEquals = findViewById(R.id.btEquals);
 
-        Buttons.addInputButtons(buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour,
-                buttonFive, buttonSix, buttonSeven, buttonEight, buttonNine,
-                buttonPositiveNegative, buttonDeciminalSeparator, buttonCleanEnd, buttonBackSpace);
+        buttons.addInputButtons();
         Buttons.addActionButtons(buttonPlus, buttonMinus, buttonMultiply, buttonDivision);
         Buttons.addFunctionButtons(buttonFraction, buttonSquare, buttonPower, buttonPercent);
         Buttons.setEqualsButton(buttonEquals);
         Buttons.setCleanAllButton(buttonCleanAll);
 
-        Buttons.setListener(Buttons.getInputButtons(), new InputListener());
+        Buttons.setListener(buttons.getInputButtons(), new InputListener());
         Buttons.setListener(Buttons.getActionButtons(), new ActionListener());
         Buttons.setListener(Buttons.getFunctionButtons(), new FunctionListener());
         buttonCleanAll.setOnClickListener(new CleanAllListener());
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         ) {
             textView.setTextSize(25);
             textView.setText("Выход за пределы диапазона");
-            Buttons.setClickable();
+//            Buttons.setClickable();
         } else if (result.length() > 10) {
             result.insert(0, '~');
             textView.setText(result.subSequence(0, 11));
@@ -121,6 +123,6 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextSize(60);
         textView.setGravity(Gravity.CENTER);
         textView.setText("0");
-        Buttons.setClickable();
+//        Buttons.setClickable();
     }
 }

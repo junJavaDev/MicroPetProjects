@@ -1,20 +1,81 @@
 package ru.junJavaDev.calculator;
 
+import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.calculator.R;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Buttons {
-    private static Set<Button> inputButtons = new HashSet<>();
+public class Buttons extends androidx.appcompat.widget.AppCompatButton{
+
+    public  Button buttonZero;
+    public  Button buttonOne;
+    public  Button buttonTwo;
+    public Button buttonThree;
+    public Button buttonFour;
+    public Button buttonFive;
+    public Button buttonSix;
+    public Button buttonSeven;
+    public Button buttonEight;
+    public Button buttonNine;
+    public Button buttonPositiveNegative;
+    public Button buttonDeciminalSeparator;
+    public Button buttonCleanEnd;
+    public Button buttonBackSpace;
+
+
+    private Set<Button> inputButtons = new HashSet<>();
     private static Set<Button> actionButtons = new HashSet<>();
     private static Set<Button> functionButtons = new HashSet<>();
     private static Button equalsButton;
     private static Button cleanAllButton;
-    public static void addInputButtons(Button ... buttons) {
-        inputButtons.addAll(Arrays.asList(buttons));
+
+    public Buttons(Context context, Button btZero, Button btOne, Button btTwo, Button btThree,
+                   Button btFour, Button btFive, Button btSix, Button btSeven, Button btEight,
+                   Button btNine, Button btPositiveNegative, Button btDeciminalSeparator,
+                   Button btCleanEnd, Button btBackSpace) {
+        super(context);
+        buttonZero = btZero;
+        buttonOne = btOne;
+        buttonTwo = btTwo;
+        buttonThree = btThree;
+        buttonFour = btFour;
+        buttonFive = btFive;
+        buttonSix = btSix;
+        buttonSeven = btSeven;
+        buttonEight = btEight;
+        buttonNine = btNine;
+        buttonPositiveNegative = btPositiveNegative;
+        buttonDeciminalSeparator = btDeciminalSeparator;
+        buttonCleanEnd = btCleanEnd;
+        buttonBackSpace = btBackSpace;}
+
+
+    public void addInputButtons() {
+        inputButtons.add(buttonZero);
+        inputButtons.add(buttonOne);
+        inputButtons.add(buttonTwo);
+        inputButtons.add(buttonThree);
+        inputButtons.add(buttonFour);
+        inputButtons.add(buttonFive);
+        inputButtons.add(buttonSix);
+        inputButtons.add(buttonSeven);
+        inputButtons.add(buttonEight);
+        inputButtons.add(buttonNine);
+        inputButtons.add(buttonPositiveNegative);
+        inputButtons.add(buttonDeciminalSeparator);
+        inputButtons.add(buttonCleanEnd);
+        inputButtons.add(buttonBackSpace);
     }
 
     public static void addActionButtons(Button ... buttons) {
@@ -39,7 +100,7 @@ public class Buttons {
         Buttons.equalsButton = equalsButton;
     }
 
-    public static Set<Button> getInputButtons() {
+    public Set<Button> getInputButtons() {
         return inputButtons;
     }
 
@@ -51,7 +112,7 @@ public class Buttons {
         return functionButtons;
     }
 
-    public static void setUnClickable() {
+    public void setUnClickable() {
         for (Button inputButton : inputButtons) {
             inputButton.setClickable(false);
         }
@@ -64,7 +125,7 @@ public class Buttons {
         equalsButton.setClickable(false);
     }
 
-    public static void setClickable() {
+    public  void setClickable() {
         for (Button inputButton : inputButtons) {
             inputButton.setClickable(true);
         }
