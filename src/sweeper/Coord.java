@@ -11,8 +11,7 @@ public class Coord {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Coord){
-            Coord to = (Coord) obj;
+        if (obj instanceof Coord to){
             return to.x == x && to.y == y;
         }
         return super.equals(obj);
