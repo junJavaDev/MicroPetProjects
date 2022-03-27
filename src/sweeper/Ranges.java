@@ -1,13 +1,27 @@
 package sweeper;
 
-public class Ranges {
-    private Coord size;
+import java.util.ArrayList;
 
-    public void setSize(Coord size) {
-        this.size = size;
+public class Ranges {
+    private static Coord size;
+    private static ArrayList<Coord> allCoords;
+
+    public static void setSize(Coord size) {
+        Ranges.size = size;
+        allCoords = new ArrayList<>();
+        for (int y = 0; y < size.y; y++) {
+            for (int x = 0; x < size.x; x++) {
+                allCoords.add(new Coord(x, y));
+            }
+        }
     }
 
-    public Coord getSize() {
+    public static Coord getSize() {
         return size;
     }
+
+    public static ArrayList<Coord> getAllCoords() {
+        return allCoords;
+    }
+
 }
