@@ -21,7 +21,6 @@ public class MineSweeper extends JFrame {
         initFrame();
     }
 
-
     private void initPanel() {
         panel = new JPanel() {
             @Override
