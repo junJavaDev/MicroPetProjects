@@ -3,6 +3,7 @@ import java.awt.*;
 import java.util.Objects;
 
 import sweeper.Box;
+import sweeper.Coord;
 
 public class MineSweeper extends JFrame {
     private JPanel panel;
@@ -27,7 +28,8 @@ public class MineSweeper extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 for (Box box: Box.values()) {
-                    g.drawImage((Image)box.image, box.ordinal() * IMAGE_SIZE, 0, this);
+                    Coord coord = new Coord(box.ordinal() * IMAGE_SIZE, 0);
+                    g.drawImage((Image)box.image, coord.x, coord.y, this);
                 }
             }
         };
