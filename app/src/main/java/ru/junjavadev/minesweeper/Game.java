@@ -3,6 +3,12 @@ package ru.junjavadev.minesweeper;
 public class Game {
     private final Bomb bomb;
     private final Flag flag;
+
+    public int getBombsLeft() {
+        return bombsLeft;
+    }
+
+    private int bombsLeft;
     private GameState state;
 
     public GameState getState() {
@@ -19,6 +25,7 @@ public class Game {
         bomb.start();
         flag.start();
         state = GameState.PLAYED;
+        bombsLeft = bomb.getTotalBombs();
     }
 
     public Box getBox(Coord coord) {
@@ -38,6 +45,7 @@ public class Game {
     public void pressRightButton(Coord coord) {
         if (gameOver()) return;
         flag.toggleFlagedToBox(coord);
+        bombsLeft = bomb.getTotalBombs() - flag.getCountOfFlags();
     }
 
     private boolean gameOver() {
@@ -63,10 +71,10 @@ public class Game {
                 switch (bomb.get(coord)) {
                     case ZERO:
                         openBoxesAround(coord);
-                        return;
+                        break;
                     case BOMB:
                         openBombs(coord);
-                        return;
+                        break;
                     default:
                         flag.setOpenedToBox(coord);
                 }

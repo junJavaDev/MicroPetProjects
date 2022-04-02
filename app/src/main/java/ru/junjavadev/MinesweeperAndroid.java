@@ -1,37 +1,41 @@
 package ru.junjavadev;
 
+import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.Objects;
-
 import ru.junjavadev.minesweeper.Box;
 import ru.junjavadev.minesweeper.Coord;
 import ru.junjavadev.minesweeper.Game;
 import ru.junjavadev.minesweeper.R;
 
-
 public class MinesweeperAndroid extends AppCompatActivity {
+    public static final int DEFAULT_VALUE = 10;
     public static Game game;
     TextView massageState;
-    final int ROWS = 5;
-    final int COLS = 5;
-    final int BOMBS = 50;
+    TextView bombsCount;
+    int ROWS;
+    int COLUMNS;
+    int BOMBS;
     TableLayout tableLayout;
 
     public void setMassageState(String textMessage) {
         massageState.setText(textMessage);
     }
 
+    public void setBombsLeftMessage(String textMessage) {
+        bombsCount.setText(textMessage);
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,11 +43,15 @@ public class MinesweeperAndroid extends AppCompatActivity {
         tableLayout = findViewById(R.id.tableLayout);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        ROWS = getIntent().getIntExtra("ROWS", DEFAULT_VALUE);
+        COLUMNS = getIntent().getIntExtra("COLUMNS", DEFAULT_VALUE);
+        BOMBS = getIntent().getIntExtra("BOMBS", DEFAULT_VALUE);
         startNewGame();
     }
 
     private void startNewGame() {
-        game = new Game(ROWS, COLS, BOMBS);
+        game = new Game(ROWS, COLUMNS, BOMBS);
         game.start();
         setImages();
         initField();
@@ -53,6 +61,8 @@ public class MinesweeperAndroid extends AppCompatActivity {
     private void initLabel() {
         massageState = findViewById(R.id.label);
         massageState.setText(R.string.welcome);
+        bombsCount = findViewById(R.id.bombsCount);
+        bombsCount.setText(getCountOfBombsMessage());
     }
 
     private void initField() {
@@ -62,7 +72,7 @@ public class MinesweeperAndroid extends AppCompatActivity {
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
                     LayoutParams.WRAP_CONTENT));
-            for (int j = 0; j < COLS; j++) {
+            for (int j = 0; j < COLUMNS; j++) {
                 Coord coord = new Coord(i, j);
                 view = getImageView(game.getBox(coord).name().toLowerCase());
                 view.setClickable(true);
@@ -70,11 +80,14 @@ public class MinesweeperAndroid extends AppCompatActivity {
                     game.pressLeftButton(coord);
                     initField();
                     setMassageState(getMessage());
+                    setBombsLeftMessage(getCountOfBombsMessage());
+
                 });
                 view.setOnLongClickListener(longClick -> {
                     game.pressRightButton(coord);
                     initField();
                     setMassageState(getMessage());
+                    setBombsLeftMessage(getCountOfBombsMessage());
                     return true;
                 });
                 tableRow.addView(view, j);
@@ -86,13 +99,21 @@ public class MinesweeperAndroid extends AppCompatActivity {
     private String getMessage() {
         switch (game.getState()) {
             case PLAYED:
-                return "Think twice";
+                return getString(R.string.be_careful);
             case BOMBED:
-                return "YOU LOSE! BIG BA-DA-BOOM!";
+                Toast.makeText(this, getString(R.string.lose), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, getString(R.string.victory_lose), Toast.LENGTH_SHORT).show();
+                return getString(R.string.you_lose);
             case WINNER:
-                return "CONGRATULATIONS";
+                Toast.makeText(this, getString(R.string.win), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, getString(R.string.victory_win), Toast.LENGTH_SHORT).show();
+                return getString(R.string.you_win);
         }
         return null;
+    }
+
+    private String getCountOfBombsMessage() {
+        return getString(R.string.bombs_count) + " " + game.getBombsLeft();
     }
 
     private void setImages() {

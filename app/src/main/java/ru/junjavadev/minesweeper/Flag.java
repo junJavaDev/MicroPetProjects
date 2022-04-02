@@ -3,9 +3,16 @@ package ru.junjavadev.minesweeper;
 public class Flag {
     private Matrix flagMap;
     private int countOfClosedBoxes;
+    private int countOfFlags = 0;
+
+
+    public int getCountOfFlags() {
+        return countOfFlags;
+    }
 
     void start() {
         flagMap = new Matrix(Box.CLOSED);
+        countOfFlags = 0;
         countOfClosedBoxes = Ranges.getSize().x * Ranges.getSize().y;
     }
 
@@ -21,18 +28,22 @@ public class Flag {
     public void toggleFlagedToBox(Coord coord) {
         switch (flagMap.get(coord)) {
             case FLAGGED:
-                setClosedRoBox(coord);
+                setClosedToBox(coord);
+                break;
             case CLOSED:
                 setFlagedToBox(coord);
+                break;
         }
     }
 
-    private void setClosedRoBox(Coord coord) {
+    public void setClosedToBox(Coord coord) {
         flagMap.set(coord, Box.CLOSED);
+        countOfFlags--;
     }
 
     private void setFlagedToBox(Coord coord) {
         flagMap.set(coord, Box.FLAGGED);
+        countOfFlags++;
     }
 
     int getCountOfClosedBoxes() {
