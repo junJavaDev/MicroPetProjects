@@ -2,10 +2,14 @@ package ru.junjavadev;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.graphics.Path;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -26,6 +30,7 @@ public class MinesweeperAndroid extends AppCompatActivity {
     int COLUMNS;
     int BOMBS;
     TableLayout tableLayout;
+    HorizontalScrollView scrollView;
 
     public void setMassageState(String textMessage) {
         massageState.setText(textMessage);
@@ -40,7 +45,7 @@ public class MinesweeperAndroid extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.field);
-        tableLayout = findViewById(R.id.tableLayout);
+        tableLayout = findViewById(R.id.table_layout);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
