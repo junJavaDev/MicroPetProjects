@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int MAX_ROWS = 100;
     public static final int MAX_COLUMNS = 40;
     public static final int MIN_VALUE = 2;
+    public static final int MIN_BOMB_VALUE = 1;
     public static final int DEFAULT_VALUE = 10;
     public static final String EASY_ROWS_COLUMNS = "9";
     public static final String EASY_BOMBS = "10";
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         personalGame.setOnClickListener(view -> {
             rows = getRows(String.valueOf(rowsIn.getText()));
             columns = getColumns(String.valueOf(columnIn.getText()));
-            bombs = getNumber(String.valueOf(bombsIn.getText()));
+            bombs = getBombs(String.valueOf(bombsIn.getText()));
             Intent intent = new Intent(MainActivity.this, MinesweeperAndroid.class);
             intent.putExtra("ROWS", rows);
             intent.putExtra("COLUMNS", columns);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if (columns > MAX_COLUMNS) {
             columns = MAX_COLUMNS;
         }
-        return columns;
+        return Math.max(columns, MIN_VALUE);
     }
 
     private int getRows (String in) {
@@ -89,7 +90,12 @@ public class MainActivity extends AppCompatActivity {
         if (rows > MAX_ROWS) {
             rows = MAX_ROWS;
         }
-        return rows;
+        return Math.max(rows, MIN_VALUE);
+    }
+
+    private int getBombs (String in) {
+        int bombs = getNumber(in);
+        return Math.max(bombs, MIN_BOMB_VALUE);
     }
 
     private int getNumber (String in) {
@@ -102,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 return DEFAULT_VALUE;
             }
-            return Math.max(number, MIN_VALUE);
+            return number;
         }
     }
 }
