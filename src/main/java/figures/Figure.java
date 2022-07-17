@@ -21,7 +21,6 @@ public abstract class Figure implements Clockwise {
     public void turnClockwise() {
         arrayClockwise();
         moveLeft();
-        moveDown();
      }
 
     private void arrayClockwise() {
@@ -58,31 +57,6 @@ public abstract class Figure implements Clockwise {
             }
         }
         return isFirstColEmpty;
-    }
-
-    private void moveDown() {
-        if (isLastRowEmpty()) {
-            int[][] movedDown = new int[rows][cols];
-            for (int col = 0; col < cols; col++) {
-                int temp = this.body[rows - 1][col];
-                for (int row = rows - 1; row > 0; row--) {
-                    movedDown[row][col] = body[row - 1][col];
-                }
-                movedDown[0][col] = temp;
-            }
-            body = movedDown;
-        }
-    }
-
-    private boolean isLastRowEmpty() {
-        boolean isLastRowEmpty = true;
-        for (int col : body[rows - 1]) {
-            if (col == 1) {
-                isLastRowEmpty = false;
-                break;
-            }
-        }
-        return isLastRowEmpty;
     }
 
     @Override
