@@ -9,6 +9,7 @@ import static ru.junJavaDev.calculator.MainActivity.equals;
 import static ru.junJavaDev.calculator.MainActivity.action;
 import static ru.junJavaDev.calculator.MainActivity.showResult;
 
+import android.annotation.SuppressLint;
 import android.os.Vibrator;
 import android.view.View;
 
@@ -18,12 +19,13 @@ import ru.junJavaDev.calculator.Action;
 import ru.junJavaDev.calculator.Setting;
 
 public class ActionListener implements View.OnClickListener {
-    private Vibrator vibrator;
+    private final Vibrator vibrator;
 
     public ActionListener(Vibrator vibrator) {
         this.vibrator = vibrator;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
