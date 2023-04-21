@@ -7,8 +7,8 @@ import ru.junJavaDev.calculator.MainActivity;
 import ru.junJavaDev.calculator.Setting;
 
 public class CleanAllListener implements View.OnClickListener{
-    private Vibrator vibrator;
-    private MainActivity mainActivity;
+    private final Vibrator vibrator;
+    private final MainActivity mainActivity;
 
     public CleanAllListener(Vibrator vibrator, MainActivity mainActivity) {
         this.vibrator = vibrator;

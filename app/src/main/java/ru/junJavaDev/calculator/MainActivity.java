@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public static void reset() {
+    public void reset() {
         action = null;
         firstArgument = null;
         secondArgument = null;
@@ -132,6 +132,6 @@ public class MainActivity extends AppCompatActivity {
         textView.setTextSize(60);
         textView.setGravity(Gravity.CENTER);
         textView.setText("0");
-//        Buttons.setClickable();
+        buttons.setClickable();
     }
 }
