@@ -14,7 +14,7 @@ import android.view.View;
 import ru.junJavaDev.calculator.Setting;
 
 public class EqualsListener implements View.OnClickListener {
-    private Vibrator vibrator;
+    private final Vibrator vibrator;
 
     public EqualsListener(Vibrator vibrator) {
         this.vibrator = vibrator;
