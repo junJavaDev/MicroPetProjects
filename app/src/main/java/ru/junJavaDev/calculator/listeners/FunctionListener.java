@@ -5,13 +5,23 @@ import static ru.junJavaDev.calculator.MainActivity.secondArgument;
 import static ru.junJavaDev.calculator.MainActivity.firstArgument;
 import static ru.junJavaDev.calculator.MainActivity.showResult;
 
+import android.os.Vibrator;
 import android.view.View;
 
 import com.example.calculator.R;
 
+import ru.junJavaDev.calculator.Setting;
+
 public class FunctionListener implements View.OnClickListener {
+    private Vibrator vibrator;
+
+    public FunctionListener(Vibrator vibrator) {
+        this.vibrator = vibrator;
+    }
+
     @Override
     public void onClick(View view) {
+        if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
         secondArgument = getNumber();
         switch (view.getId()) {
             case R.id.btFraction:

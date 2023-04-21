@@ -4,17 +4,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.text.method.ArrowKeyMovementMethod;
 import android.view.Gravity;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.calculator.R;
 
 import java.text.DecimalFormat;
-import java.util.Objects;
 
 import ru.junJavaDev.calculator.listeners.ActionListener;
 import ru.junJavaDev.calculator.listeners.CleanAllListener;
@@ -83,12 +84,20 @@ public class MainActivity extends AppCompatActivity {
         Buttons.setEqualsButton(buttonEquals);
         Buttons.setCleanAllButton(buttonCleanAll);
 
-        Buttons.setListener(buttons.getInputButtons(), new InputListener());
-        Buttons.setListener(Buttons.getActionButtons(), new ActionListener());
-        Buttons.setListener(Buttons.getFunctionButtons(), new FunctionListener());
-        buttonCleanAll.setOnClickListener(new CleanAllListener());
-        buttonEquals.setOnClickListener(new EqualsListener());
-        buttonEquals.setOnLongClickListener(new EqualsLongClickListener());
+        Vibrator vibrator;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            VibratorManager vm = (VibratorManager) getSystemService(VIBRATOR_MANAGER_SERVICE);
+            vibrator = vm.getDefaultVibrator();
+        } else {
+            vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        }
+
+        Buttons.setListener(buttons.getInputButtons(), new InputListener(vibrator));
+        Buttons.setListener(Buttons.getActionButtons(), new ActionListener(vibrator));
+        Buttons.setListener(Buttons.getFunctionButtons(), new FunctionListener(vibrator));
+        buttonCleanAll.setOnClickListener(new CleanAllListener(vibrator, this));
+        buttonEquals.setOnClickListener(new EqualsListener(vibrator));
+        buttonEquals.setOnLongClickListener(new EqualsLongClickListener(buttons));
 
     }
     public static Double getNumber() {

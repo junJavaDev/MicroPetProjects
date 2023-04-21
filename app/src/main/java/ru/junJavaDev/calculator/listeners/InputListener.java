@@ -3,11 +3,20 @@ package ru.junJavaDev.calculator.listeners;
 import static ru.junJavaDev.calculator.MainActivity.isCalculation;
 import static ru.junJavaDev.calculator.MainActivity.textView;
 
+import android.os.Vibrator;
 import android.view.View;
 
 import com.example.calculator.R;
 
+import ru.junJavaDev.calculator.Setting;
+
 public class InputListener implements View.OnClickListener {
+    private Vibrator vibrator;
+
+    public InputListener(Vibrator vibrator) {
+        this.vibrator = vibrator;
+    }
+
     boolean isZero;
     boolean isNegative;
     boolean isZeroNegative;
@@ -17,6 +26,7 @@ public class InputListener implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
         if (!isCalculation && textView.getText().length() > 9) {
             return;
         }

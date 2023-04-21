@@ -8,11 +8,21 @@ import static ru.junJavaDev.calculator.MainActivity.firstArgument;
 import static ru.junJavaDev.calculator.MainActivity.equals;
 import static ru.junJavaDev.calculator.MainActivity.showResult;
 
+import android.os.Vibrator;
 import android.view.View;
 
+import ru.junJavaDev.calculator.Setting;
+
 public class EqualsListener implements View.OnClickListener {
+    private Vibrator vibrator;
+
+    public EqualsListener(Vibrator vibrator) {
+        this.vibrator = vibrator;
+    }
+
     @Override
     public void onClick(View view) {
+        if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
         if (action != null) {
             if (!isCalculation) {
                 secondArgument = getNumber();

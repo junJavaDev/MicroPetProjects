@@ -12,13 +12,19 @@ import ru.junJavaDev.calculator.Buttons;
 
 public class EqualsLongClickListener implements View.OnLongClickListener {
 
+    private Buttons buttons;
+
+    public EqualsLongClickListener(Buttons buttons) {
+        this.buttons = buttons;
+    }
+
     @Override
     public boolean onLongClick(View view) {
         if (textView.getText().toString().equals("88")) {
             textView.setTextSize(25);
             textView.setGravity(Gravity.LEFT);
             textView.setText(R.string.eighty_eight);
-//            buttons.setUnClickable();
+            buttons.setUnClickable();
         }
         return false;
     }

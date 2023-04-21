@@ -9,16 +9,24 @@ import static ru.junJavaDev.calculator.MainActivity.equals;
 import static ru.junJavaDev.calculator.MainActivity.action;
 import static ru.junJavaDev.calculator.MainActivity.showResult;
 
+import android.os.Vibrator;
 import android.view.View;
 
 import com.example.calculator.R;
 
 import ru.junJavaDev.calculator.Action;
-import ru.junJavaDev.calculator.MainActivity;
+import ru.junJavaDev.calculator.Setting;
 
 public class ActionListener implements View.OnClickListener {
+    private Vibrator vibrator;
+
+    public ActionListener(Vibrator vibrator) {
+        this.vibrator = vibrator;
+    }
+
     @Override
     public void onClick(View view) {
+        if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
         secondArgument = getNumber();
         if (firstArgument == null || isCalculation) {
             firstArgument = getNumber();
