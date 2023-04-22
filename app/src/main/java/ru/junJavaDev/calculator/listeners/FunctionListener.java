@@ -5,6 +5,7 @@ import static ru.junJavaDev.calculator.MainActivity.secondArgument;
 import static ru.junJavaDev.calculator.MainActivity.firstArgument;
 import static ru.junJavaDev.calculator.MainActivity.showResult;
 
+import android.annotation.SuppressLint;
 import android.os.Vibrator;
 import android.view.View;
 
@@ -13,12 +14,13 @@ import com.example.calculator.R;
 import ru.junJavaDev.calculator.Setting;
 
 public class FunctionListener implements View.OnClickListener {
-    private Vibrator vibrator;
+    private final Vibrator vibrator;
 
     public FunctionListener(Vibrator vibrator) {
         this.vibrator = vibrator;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
