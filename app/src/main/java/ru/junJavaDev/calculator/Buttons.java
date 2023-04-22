@@ -1,22 +1,16 @@
 package ru.junJavaDev.calculator;
 
-import android.content.Context;
-import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.calculator.R;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Buttons extends androidx.appcompat.widget.AppCompatButton{
+public class Buttons extends AppCompatActivity {
 
     public  Button buttonZero;
     public  Button buttonOne;
@@ -34,17 +28,18 @@ public class Buttons extends androidx.appcompat.widget.AppCompatButton{
     public Button buttonBackSpace;
 
 
-    private Set<Button> inputButtons = new HashSet<>();
-    private static Set<Button> actionButtons = new HashSet<>();
-    private static Set<Button> functionButtons = new HashSet<>();
+    private final Set<Button> inputButtons = new HashSet<>();
+    private static final Set<Button> actionButtons = new HashSet<>();
+    private static final Set<Button> functionButtons = new HashSet<>();
+    @SuppressLint("StaticFieldLeak")
     private static Button equalsButton;
+    @SuppressLint("StaticFieldLeak")
     private static Button cleanAllButton;
 
-    public Buttons(Context context, Button btZero, Button btOne, Button btTwo, Button btThree,
+    public Buttons(Button btZero, Button btOne, Button btTwo, Button btThree,
                    Button btFour, Button btFive, Button btSix, Button btSeven, Button btEight,
                    Button btNine, Button btPositiveNegative, Button btDeciminalSeparator,
                    Button btCleanEnd, Button btBackSpace) {
-        super(context);
         buttonZero = btZero;
         buttonOne = btOne;
         buttonTwo = btTwo;

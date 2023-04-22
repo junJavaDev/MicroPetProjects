@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();   // Разобраться с этой ошибкой
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        buttons = new Buttons(this,
+        buttons = new Buttons(
                 findViewById(R.id.btZero),
                 findViewById(R.id.btOne),
                 findViewById(R.id.btTwo),
