@@ -1,12 +1,12 @@
 package ru.junJavaDev.calculator.listeners;
 
-import static ru.junJavaDev.calculator.MainActivity.action;
-import static ru.junJavaDev.calculator.MainActivity.getNumber;
-import static ru.junJavaDev.calculator.MainActivity.isCalculation;
-import static ru.junJavaDev.calculator.MainActivity.secondArgument;
-import static ru.junJavaDev.calculator.MainActivity.firstArgument;
-import static ru.junJavaDev.calculator.MainActivity.equals;
-import static ru.junJavaDev.calculator.MainActivity.showResult;
+import static ru.junJavaDev.calculator.CalcActivity.action;
+import static ru.junJavaDev.calculator.CalcActivity.getNumber;
+import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
+import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
+import static ru.junJavaDev.calculator.CalcActivity.firstArgument;
+import static ru.junJavaDev.calculator.CalcActivity.equals;
+import static ru.junJavaDev.calculator.CalcActivity.showResult;
 
 import android.os.Vibrator;
 import android.view.View;

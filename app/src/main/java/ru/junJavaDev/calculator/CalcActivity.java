@@ -3,6 +3,7 @@ package ru.junJavaDev.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,14 +26,14 @@ import ru.junJavaDev.calculator.listeners.EqualsLongClickListener;
 import ru.junJavaDev.calculator.listeners.FunctionListener;
 import ru.junJavaDev.calculator.listeners.InputListener;
 
-public class MainActivity extends AppCompatActivity {
+public class CalcActivity extends AppCompatActivity {
 
     public static Action action = null;
     public static Double firstArgument = null;
     public static Double secondArgument = null;
     public static Double equals = null;
     @SuppressLint("StaticFieldLeak")
-    public static TextView textView;
+    public static TextView calcView;
     public static boolean isCalculation;
     public static DecimalFormat decimalFormat;
     Buttons buttons;
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Objects.requireNonNull(getSupportActionBar()).hide();   // Разобраться с этой ошибкой
+        setContentView(R.layout.activity_calc);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         buttons = new Buttons(
                 findViewById(R.id.btZero),
@@ -64,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         decimalFormat = new DecimalFormat("###########.#########");
 
 
-        textView = findViewById(R.id.screenDisplay);
-        textView.setMovementMethod(new ArrowKeyMovementMethod());
+        calcView = findViewById(R.id.screenDisplay);
+        calcView.setMovementMethod(new ArrowKeyMovementMethod());
 
 
 
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonSquare = findViewById(R.id.btSquare);
         Button buttonPower = findViewById(R.id.btPower);
         Button buttonPercent = findViewById(R.id.btPercent);
-        Button buttonCleanAll = findViewById(R.id.btCleanAll);
+        Button buttonCleanAll = findViewById(R.id.btCleanAllText);
         Button buttonEquals = findViewById(R.id.btEquals);
 
         buttons.addInputButtons();
@@ -99,13 +100,13 @@ public class MainActivity extends AppCompatActivity {
         Buttons.setListener(Buttons.getFunctionButtons(), new FunctionListener(vibrator));
         buttonCleanAll.setOnClickListener(new CleanAllListener(vibrator, this));
         buttonEquals.setOnClickListener(new EqualsListener(vibrator));
-        buttonEquals.setOnLongClickListener(new EqualsLongClickListener(buttons));
+        buttonEquals.setOnLongClickListener(new EqualsLongClickListener());
 
     }
     public static Double getNumber() {
-        if (textView.getText().charAt(0) == '~') {
-            return Double.parseDouble(textView.getText().subSequence(1, textView.length()).toString().replace(',', '.'));
-        } else return Double.parseDouble(textView.getText().toString().replace(',', '.'));
+        if (calcView.getText().charAt(0) == '~') {
+            return Double.parseDouble(calcView.getText().subSequence(1, calcView.length()).toString().replace(',', '.'));
+        } else return Double.parseDouble(calcView.getText().toString().replace(',', '.'));
     }
 
     public static void showResult(Double equals) {
@@ -115,14 +116,14 @@ public class MainActivity extends AppCompatActivity {
                 equals > 0 && equals < 0.00000001 ||
                 equals < 0 && equals > -0.0000001
         ) {
-            textView.setTextSize(25);
-            textView.setText("Выход за пределы диапазона");
+            calcView.setTextSize(25);
+            calcView.setText("Выход за пределы диапазона");
 //            Buttons.setClickable();
         } else if (result.length() > 10) {
             result.insert(0, '~');
-            textView.setText(result.subSequence(0, 11));
+            calcView.setText(result.subSequence(0, 11));
         } else {
-            textView.setText(result);
+            calcView.setText(result);
         }
     }
 
@@ -131,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
         firstArgument = null;
         secondArgument = null;
         equals = null;
-        textView.setTextSize(60);
-        textView.setGravity(Gravity.CENTER);
-        textView.setText("0");
+        calcView.setTextSize(60);
+        calcView.setGravity(Gravity.CENTER);
+        calcView.setText("0");
         buttons.setClickable();
     }
 }

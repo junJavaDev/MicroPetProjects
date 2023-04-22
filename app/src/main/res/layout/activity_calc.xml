@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="ru.junJavaDev.calculator.MainActivity">
+    tools:context="ru.junJavaDev.calculator.CalcActivity">
 
     <Button
-        android:id="@+id/btCleanAll"
+        android:id="@+id/btCleanAllText"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginStart="2dp"
@@ -34,7 +34,7 @@
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@id/btPower"
-        app:layout_constraintEnd_toStartOf="@+id/btCleanAll"
+        app:layout_constraintEnd_toStartOf="@+id/btCleanAllText"
         app:layout_constraintStart_toEndOf="@+id/btPercent" />
 
     <Button
@@ -66,7 +66,7 @@
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@id/btDivision"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btCleanAll" />
+        app:layout_constraintStart_toEndOf="@+id/btCleanAllText" />
 
     <Button
         android:id="@+id/btDivision"

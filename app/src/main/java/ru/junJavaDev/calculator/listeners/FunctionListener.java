@@ -1,9 +1,9 @@
 package ru.junJavaDev.calculator.listeners;
 
-import static ru.junJavaDev.calculator.MainActivity.getNumber;
-import static ru.junJavaDev.calculator.MainActivity.secondArgument;
-import static ru.junJavaDev.calculator.MainActivity.firstArgument;
-import static ru.junJavaDev.calculator.MainActivity.showResult;
+import static ru.junJavaDev.calculator.CalcActivity.getNumber;
+import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
+import static ru.junJavaDev.calculator.CalcActivity.firstArgument;
+import static ru.junJavaDev.calculator.CalcActivity.showResult;
 
 import android.annotation.SuppressLint;
 import android.os.Vibrator;
