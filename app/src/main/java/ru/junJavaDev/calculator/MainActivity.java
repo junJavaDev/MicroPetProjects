@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.calculator.R;
 
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 import ru.junJavaDev.calculator.listeners.ActionListener;
 import ru.junJavaDev.calculator.listeners.CleanAllListener;
@@ -37,11 +38,12 @@ public class MainActivity extends AppCompatActivity {
     Buttons buttons;
 
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().hide();   // Разобраться с этой ошибкой
+        Objects.requireNonNull(getSupportActionBar()).hide();   // Разобраться с этой ошибкой
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         buttons = new Buttons(
                 findViewById(R.id.btZero),
