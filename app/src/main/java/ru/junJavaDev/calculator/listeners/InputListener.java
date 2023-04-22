@@ -3,6 +3,7 @@ package ru.junJavaDev.calculator.listeners;
 import static ru.junJavaDev.calculator.MainActivity.isCalculation;
 import static ru.junJavaDev.calculator.MainActivity.textView;
 
+import android.annotation.SuppressLint;
 import android.os.Vibrator;
 import android.view.View;
 
@@ -11,7 +12,7 @@ import com.example.calculator.R;
 import ru.junJavaDev.calculator.Setting;
 
 public class InputListener implements View.OnClickListener {
-    private Vibrator vibrator;
+    private final Vibrator vibrator;
 
     public InputListener(Vibrator vibrator) {
         this.vibrator = vibrator;
@@ -24,6 +25,7 @@ public class InputListener implements View.OnClickListener {
     CharSequence buffer;
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
