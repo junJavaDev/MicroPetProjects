@@ -28,9 +28,6 @@ public class TextActivity extends AppCompatActivity {
     }
 
     public void changeText() {
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("text");
-        Toast.makeText(this, "Username: " + username, Toast.LENGTH_SHORT).show();
         float textSize = getIntent().getFloatExtra("textSize", 25);
         int gravity = getIntent().getIntExtra("gravity", 0);
         int text = getIntent().getIntExtra("text", 0);

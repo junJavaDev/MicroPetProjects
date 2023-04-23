@@ -46,46 +46,12 @@ public class CalcActivity extends AppCompatActivity {
         setContentView(R.layout.activity_calc);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        buttons = new Buttons(
-                findViewById(R.id.btZero),
-                findViewById(R.id.btOne),
-                findViewById(R.id.btTwo),
-                findViewById(R.id.btThree),
-                findViewById(R.id.btFour),
-                findViewById(R.id.btFive),
-                findViewById(R.id.btSix),
-                findViewById(R.id.btSeven),
-                findViewById(R.id.btEight),
-                findViewById(R.id.btNine),
-                findViewById(R.id.btPositiveNegative),
-                findViewById(R.id.btDeciminalSeparator),
-                findViewById(R.id.btCleanEnd),
-                findViewById(R.id.btBackSpace));
+        buttons = new Buttons(this);
 
         decimalFormat = new DecimalFormat("###########.#########");
 
-
         calcView = findViewById(R.id.screenDisplay);
         calcView.setMovementMethod(new ArrowKeyMovementMethod());
-
-
-
-        Button buttonPlus = findViewById(R.id.btPlus);
-        Button buttonMinus = findViewById(R.id.btMinus);
-        Button buttonMultiply = findViewById(R.id.btMultiply);
-        Button buttonDivision = findViewById(R.id.btDivision);
-        Button buttonFraction = findViewById(R.id.btFraction);
-        Button buttonSquare = findViewById(R.id.btSquare);
-        Button buttonPower = findViewById(R.id.btPower);
-        Button buttonPercent = findViewById(R.id.btPercent);
-        Button buttonCleanAll = findViewById(R.id.btCleanAllText);
-        Button buttonEquals = findViewById(R.id.btEquals);
-
-        buttons.addInputButtons();
-        Buttons.addActionButtons(buttonPlus, buttonMinus, buttonMultiply, buttonDivision);
-        Buttons.addFunctionButtons(buttonFraction, buttonSquare, buttonPower, buttonPercent);
-        Buttons.setEqualsButton(buttonEquals);
-        Buttons.setCleanAllButton(buttonCleanAll);
 
         Vibrator vibrator;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -96,11 +62,11 @@ public class CalcActivity extends AppCompatActivity {
         }
 
         Buttons.setListener(buttons.getInputButtons(), new InputListener(vibrator));
-        Buttons.setListener(Buttons.getActionButtons(), new ActionListener(vibrator));
-        Buttons.setListener(Buttons.getFunctionButtons(), new FunctionListener(vibrator));
-        buttonCleanAll.setOnClickListener(new CleanAllListener(vibrator, this));
-        buttonEquals.setOnClickListener(new EqualsListener(vibrator));
-        buttonEquals.setOnLongClickListener(new EqualsLongClickListener());
+        Buttons.setListener(buttons.getActionButtons(), new ActionListener(vibrator));
+        Buttons.setListener(buttons.getFunctionButtons(), new FunctionListener(vibrator));
+        buttons.getCleanAllButton().setOnClickListener(new CleanAllListener(vibrator, this));
+        buttons.getEqualsButton().setOnClickListener(new EqualsListener(vibrator));
+        buttons.getEqualsButton().setOnLongClickListener(new EqualsLongClickListener());
 
     }
     public static Double getNumber() {
@@ -135,6 +101,5 @@ public class CalcActivity extends AppCompatActivity {
         calcView.setTextSize(60);
         calcView.setGravity(Gravity.CENTER);
         calcView.setText("0");
-        buttons.setClickable();
     }
 }

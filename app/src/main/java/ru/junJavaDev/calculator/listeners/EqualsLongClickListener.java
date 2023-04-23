@@ -2,7 +2,6 @@ package ru.junJavaDev.calculator.listeners;
 
 import static android.view.Gravity.*;
 import static ru.junJavaDev.calculator.CalcActivity.calcView;
-import static ru.junJavaDev.calculator.TextActivity.textView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -18,8 +17,8 @@ public class EqualsLongClickListener implements View.OnLongClickListener {
     @Override
     public boolean onLongClick(View v) {
         switch (calcView.getText().toString()) {
-            case "88" ->  showText(v, 25, LEFT, R.string.eighty_eight);
-            case "511" -> showText(v, 35, CENTER, R.string.love_story);
+            case "88" -> showText(v, 25, LEFT, R.string.eighty_eight);
+            case "411" -> showText(v, 35, CENTER, R.string.love_story);
         }
         return false;
     }

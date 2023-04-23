@@ -1,84 +1,74 @@
 package ru.junJavaDev.calculator;
 
-import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.calculator.R;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Buttons extends AppCompatActivity {
+public class Buttons {
+    private CalcActivity activity;
 
-    public  Button buttonZero;
-    public  Button buttonOne;
-    public  Button buttonTwo;
-    public Button buttonThree;
-    public Button buttonFour;
-    public Button buttonFive;
-    public Button buttonSix;
-    public Button buttonSeven;
-    public Button buttonEight;
-    public Button buttonNine;
-    public Button buttonPositiveNegative;
-    public Button buttonDeciminalSeparator;
-    public Button buttonCleanEnd;
-    public Button buttonBackSpace;
-
+    public Buttons(CalcActivity activity) {
+        this.activity = activity;
+        addInputButtons();
+        addActionButtons();
+        addFunctionButtons();
+        addCleanAllButton();
+        addEqualsButton();
+    }
 
     private final Set<Button> inputButtons = new HashSet<>();
-    private static final Set<Button> actionButtons = new HashSet<>();
-    private static final Set<Button> functionButtons = new HashSet<>();
-    @SuppressLint("StaticFieldLeak")
-    private static Button equalsButton;
-    @SuppressLint("StaticFieldLeak")
-    private static Button cleanAllButton;
-
-    public Buttons(Button btZero, Button btOne, Button btTwo, Button btThree,
-                   Button btFour, Button btFive, Button btSix, Button btSeven, Button btEight,
-                   Button btNine, Button btPositiveNegative, Button btDeciminalSeparator,
-                   Button btCleanEnd, Button btBackSpace) {
-        buttonZero = btZero;
-        buttonOne = btOne;
-        buttonTwo = btTwo;
-        buttonThree = btThree;
-        buttonFour = btFour;
-        buttonFive = btFive;
-        buttonSix = btSix;
-        buttonSeven = btSeven;
-        buttonEight = btEight;
-        buttonNine = btNine;
-        buttonPositiveNegative = btPositiveNegative;
-        buttonDeciminalSeparator = btDeciminalSeparator;
-        buttonCleanEnd = btCleanEnd;
-        buttonBackSpace = btBackSpace;}
-
+    private final Set<Button> actionButtons = new HashSet<>();
+    private final Set<Button> functionButtons = new HashSet<>();
+    private Button cleanAllButton;
+    private Button equalsButton;
 
     public void addInputButtons() {
-        inputButtons.add(buttonZero);
-        inputButtons.add(buttonOne);
-        inputButtons.add(buttonTwo);
-        inputButtons.add(buttonThree);
-        inputButtons.add(buttonFour);
-        inputButtons.add(buttonFive);
-        inputButtons.add(buttonSix);
-        inputButtons.add(buttonSeven);
-        inputButtons.add(buttonEight);
-        inputButtons.add(buttonNine);
-        inputButtons.add(buttonPositiveNegative);
-        inputButtons.add(buttonDeciminalSeparator);
-        inputButtons.add(buttonCleanEnd);
-        inputButtons.add(buttonBackSpace);
+        inputButtons.addAll(Set.of (
+                activity.findViewById(R.id.btZero),
+                activity.findViewById(R.id.btOne),
+                activity.findViewById(R.id.btTwo),
+                activity.findViewById(R.id.btThree),
+                activity.findViewById(R.id.btFour),
+                activity.findViewById(R.id.btFive),
+                activity.findViewById(R.id.btSix),
+                activity.findViewById(R.id.btSeven),
+                activity.findViewById(R.id.btEight),
+                activity.findViewById(R.id.btNine),
+                activity.findViewById(R.id.btPositiveNegative),
+                activity.findViewById(R.id.btDeciminalSeparator),
+                activity.findViewById(R.id.btCleanEnd),
+                activity.findViewById(R.id.btBackSpace))
+        );
     }
 
-    public static void addActionButtons(Button ... buttons) {
-        actionButtons.addAll(Arrays.asList(buttons));
+    private void addActionButtons(Button ... buttons) {
+        actionButtons.addAll(Set.of(
+                activity.findViewById(R.id.btPlus),
+                activity.findViewById(R.id.btMinus),
+                activity.findViewById(R.id.btMultiply),
+                activity.findViewById(R.id.btDivision)
+        ));
     }
 
-    public static void addFunctionButtons(Button ... buttons) {
-        functionButtons.addAll(Arrays.asList(buttons));
+    private void addFunctionButtons(Button ... buttons) {
+        functionButtons.addAll(Set.of(
+                activity.findViewById(R.id.btFraction),
+                activity.findViewById(R.id.btSquare),
+                activity.findViewById(R.id.btPower),
+                activity.findViewById(R.id.btPercent)
+        ));
+    }
+
+    private void addCleanAllButton() {
+        this.cleanAllButton = activity.findViewById(R.id.btCleanAllText);
+    }
+
+    private void addEqualsButton() {
+        this.equalsButton = activity.findViewById(R.id.btEquals);
     }
 
     public static void setListener (Set<Button> buttons, View.OnClickListener listener) {
@@ -87,49 +77,23 @@ public class Buttons extends AppCompatActivity {
         }
     }
 
-    public static void setCleanAllButton(Button cleanAllButton) {
-        Buttons.cleanAllButton = cleanAllButton;
-    }
-
-    public static void setEqualsButton(Button equalsButton) {
-        Buttons.equalsButton = equalsButton;
-    }
-
     public Set<Button> getInputButtons() {
         return inputButtons;
     }
 
-    public static Set<Button> getActionButtons() {
+    public Set<Button> getActionButtons() {
         return actionButtons;
     }
 
-    public static Set<Button> getFunctionButtons() {
+    public Set<Button> getFunctionButtons() {
         return functionButtons;
     }
 
-    public void setUnClickable() {
-        for (Button inputButton : inputButtons) {
-            inputButton.setClickable(false);
-        }
-        for (Button actionButton : actionButtons) {
-            actionButton.setClickable(false);
-        }
-        for (Button functionButton : functionButtons) {
-            functionButton.setClickable(false);
-        }
-        equalsButton.setClickable(false);
+    public Button getCleanAllButton() {
+        return cleanAllButton;
     }
 
-    public  void setClickable() {
-        for (Button inputButton : inputButtons) {
-            inputButton.setClickable(true);
-        }
-        for (Button actionButton : actionButtons) {
-            actionButton.setClickable(true);
-        }
-        for (Button functionButton : functionButtons) {
-            functionButton.setClickable(true);
-        }
-        equalsButton.setClickable(true);
+    public Button getEqualsButton() {
+        return equalsButton;
     }
 }
