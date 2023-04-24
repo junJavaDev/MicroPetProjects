@@ -1,17 +1,16 @@
 package ru.junJavaDev.calculator;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.calculator.R;
+import java.util.Objects;
+
+import ru.junJavaDev.calculator.R;
 
 public class TextActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
@@ -22,6 +21,7 @@ public class TextActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_text);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         textView = findViewById(R.id.screenTextDisplay);
         changeText();

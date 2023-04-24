@@ -3,13 +3,13 @@ package ru.junJavaDev.calculator;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.calculator.R;
+import ru.junJavaDev.calculator.R;
 
 import java.util.HashSet;
 import java.util.Set;
 
 public class Buttons {
-    private CalcActivity activity;
+    private final CalcActivity activity;
 
     public Buttons(CalcActivity activity) {
         this.activity = activity;

@@ -7,7 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.calculator.R;
+import ru.junJavaDev.calculator.R;
 
 import ru.junJavaDev.calculator.TextActivity;
 

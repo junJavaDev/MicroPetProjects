@@ -13,7 +13,7 @@ import android.annotation.SuppressLint;
 import android.os.Vibrator;
 import android.view.View;
 
-import com.example.calculator.R;
+import ru.junJavaDev.calculator.R;
 
 import ru.junJavaDev.calculator.Action;
 import ru.junJavaDev.calculator.Setting;

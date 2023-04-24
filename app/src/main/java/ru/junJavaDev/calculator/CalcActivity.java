@@ -3,7 +3,6 @@ package ru.junJavaDev.calculator;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,10 +10,7 @@ import android.os.Vibrator;
 import android.os.VibratorManager;
 import android.text.method.ArrowKeyMovementMethod;
 import android.view.Gravity;
-import android.widget.Button;
 import android.widget.TextView;
-
-import com.example.calculator.R;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
