@@ -3,8 +3,6 @@ package ru.junJavaDev.calculator;
 import android.view.View;
 import android.widget.Button;
 
-import ru.junJavaDev.calculator.R;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,7 +43,7 @@ public class Buttons {
         );
     }
 
-    private void addActionButtons(Button ... buttons) {
+    private void addActionButtons() {
         actionButtons.addAll(Set.of(
                 activity.findViewById(R.id.btPlus),
                 activity.findViewById(R.id.btMinus),
@@ -54,7 +52,7 @@ public class Buttons {
         ));
     }
 
-    private void addFunctionButtons(Button ... buttons) {
+    private void addFunctionButtons() {
         functionButtons.addAll(Set.of(
                 activity.findViewById(R.id.btFraction),
                 activity.findViewById(R.id.btSquare),

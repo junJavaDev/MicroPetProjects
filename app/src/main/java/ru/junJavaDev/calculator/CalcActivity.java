@@ -1,5 +1,7 @@
 package ru.junJavaDev.calculator;
 
+import static ru.junJavaDev.calculator.Setting.CALC_TEXT_SIZE;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -32,8 +34,8 @@ public class CalcActivity extends AppCompatActivity {
     public static TextView calcView;
     public static boolean isCalculation;
     public static DecimalFormat decimalFormat;
+    private Vibrator vibrator;
     Buttons buttons;
-
 
     @SuppressLint("SourceLockedOrientationActivity")
     @Override
@@ -49,20 +51,12 @@ public class CalcActivity extends AppCompatActivity {
         calcView = findViewById(R.id.screenDisplay);
         calcView.setMovementMethod(new ArrowKeyMovementMethod());
 
-        Vibrator vibrator;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            VibratorManager vm = (VibratorManager) getSystemService(VIBRATOR_MANAGER_SERVICE);
-            vibrator = vm.getDefaultVibrator();
-        } else {
-            vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        }
-
-        Buttons.setListener(buttons.getInputButtons(), new InputListener(vibrator));
-        Buttons.setListener(buttons.getActionButtons(), new ActionListener(vibrator));
-        Buttons.setListener(buttons.getFunctionButtons(), new FunctionListener(vibrator));
-        buttons.getCleanAllButton().setOnClickListener(new CleanAllListener(vibrator, this));
-        buttons.getEqualsButton().setOnClickListener(new EqualsListener(vibrator));
-        buttons.getEqualsButton().setOnLongClickListener(new EqualsLongClickListener());
+        Buttons.setListener(buttons.getInputButtons(), new InputListener(this));
+        Buttons.setListener(buttons.getActionButtons(), new ActionListener(this));
+        Buttons.setListener(buttons.getFunctionButtons(), new FunctionListener(this));
+        buttons.getCleanAllButton().setOnClickListener(new CleanAllListener(this));
+        buttons.getEqualsButton().setOnClickListener(new EqualsListener(this));
+        buttons.getEqualsButton().setOnLongClickListener(new EqualsLongClickListener(this));
 
     }
     public static Double getNumber() {
@@ -71,7 +65,7 @@ public class CalcActivity extends AppCompatActivity {
         } else return Double.parseDouble(calcView.getText().toString().replace(',', '.'));
     }
 
-    public static void showResult(Double equals) {
+    public void showResult(Double equals) {
         StringBuffer result = new StringBuffer(decimalFormat.format(equals));
         if (equals > 9999999999L ||
                 equals < -999999999L ||
@@ -79,8 +73,8 @@ public class CalcActivity extends AppCompatActivity {
                 equals < 0 && equals > -0.0000001
         ) {
             calcView.setTextSize(25);
-            calcView.setText("Выход за пределы диапазона");
-//            Buttons.setClickable();
+            this.reset();
+            calcView.setText(R.string.out_of_range);
         } else if (result.length() > 10) {
             result.insert(0, '~');
             calcView.setText(result.subSequence(0, 11));
@@ -89,13 +83,25 @@ public class CalcActivity extends AppCompatActivity {
         }
     }
 
+    public Vibrator getVibrator() {
+        if (vibrator == null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                VibratorManager vm = (VibratorManager) getSystemService(VIBRATOR_MANAGER_SERVICE);
+                vibrator = vm.getDefaultVibrator();
+            } else {
+                vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            }
+        }
+        return vibrator;
+    }
+
     public void reset() {
         action = null;
         firstArgument = null;
         secondArgument = null;
         equals = null;
-        calcView.setTextSize(60);
+        calcView.setTextSize(CALC_TEXT_SIZE);
         calcView.setGravity(Gravity.CENTER);
-        calcView.setText("0");
+        calcView.setText(R.string.zero);
     }
 }

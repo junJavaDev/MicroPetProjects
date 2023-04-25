@@ -7,22 +7,20 @@ import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
 import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
 import static ru.junJavaDev.calculator.CalcActivity.equals;
 import static ru.junJavaDev.calculator.CalcActivity.action;
-import static ru.junJavaDev.calculator.CalcActivity.showResult;
 
 import android.annotation.SuppressLint;
-import android.os.Vibrator;
 import android.view.View;
 
+import ru.junJavaDev.calculator.CalcActivity;
 import ru.junJavaDev.calculator.R;
 
 import ru.junJavaDev.calculator.Action;
 import ru.junJavaDev.calculator.Setting;
 
-public class ActionListener implements View.OnClickListener {
-    private final Vibrator vibrator;
+public class ActionListener extends AbstractListener {
 
-    public ActionListener(Vibrator vibrator) {
-        this.vibrator = vibrator;
+    public ActionListener(CalcActivity activity) {
+        super(activity);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -34,26 +32,26 @@ public class ActionListener implements View.OnClickListener {
             firstArgument = getNumber();
         } else {
             equals = calculateEquals();
-            showResult(equals);
+            activity.showResult(equals);
             firstArgument = equals;
         }
         switch (view.getId()) {
-            case R.id.btPlus:
+            case R.id.btPlus -> {
                 action = Action.plus;
                 isCalculation = true;
-                break;
-            case R.id.btMinus:
+            }
+            case R.id.btMinus -> {
                 action = Action.minus;
                 isCalculation = true;
-                break;
-            case R.id.btMultiply:
+            }
+            case R.id.btMultiply -> {
                 action = Action.multiply;
                 isCalculation = true;
-                break;
-            case R.id.btDivision:
+            }
+            case R.id.btDivision -> {
                 action = Action.division;
                 isCalculation = true;
-                break;
+            }
         }
     }
 }

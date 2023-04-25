@@ -4,26 +4,23 @@ import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
 import static ru.junJavaDev.calculator.CalcActivity.calcView;
 
 import android.annotation.SuppressLint;
-import android.os.Vibrator;
 import android.view.View;
 
+import ru.junJavaDev.calculator.CalcActivity;
 import ru.junJavaDev.calculator.R;
 
 import ru.junJavaDev.calculator.Setting;
 
-public class InputListener implements View.OnClickListener {
-    private final Vibrator vibrator;
-
-    public InputListener(Vibrator vibrator) {
-        this.vibrator = vibrator;
-    }
-
+public class InputListener extends AbstractListener {
     boolean isZero;
     boolean isNegative;
     boolean isZeroNegative;
     boolean isApproximate;
     CharSequence buffer;
 
+    public InputListener(CalcActivity activity) {
+        super(activity);
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override

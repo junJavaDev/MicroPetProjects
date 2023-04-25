@@ -6,18 +6,16 @@ import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
 import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
 import static ru.junJavaDev.calculator.CalcActivity.firstArgument;
 import static ru.junJavaDev.calculator.CalcActivity.equals;
-import static ru.junJavaDev.calculator.CalcActivity.showResult;
 
-import android.os.Vibrator;
 import android.view.View;
 
+import ru.junJavaDev.calculator.CalcActivity;
 import ru.junJavaDev.calculator.Setting;
 
-public class EqualsListener implements View.OnClickListener {
-    private final Vibrator vibrator;
+public class EqualsListener extends AbstractListener {
 
-    public EqualsListener(Vibrator vibrator) {
-        this.vibrator = vibrator;
+    public EqualsListener(CalcActivity activity) {
+        super(activity);
     }
 
     @Override
@@ -29,28 +27,18 @@ public class EqualsListener implements View.OnClickListener {
                 isCalculation = true;
             }
             equals = calculateEquals();
-            showResult(equals);
+            activity.showResult(equals);
             firstArgument = equals;
         }
     }
 
     public static Double calculateEquals() {
-        double result = 0.0;
-        switch (action) {
-            case plus:
-                result = firstArgument + secondArgument;
-                break;
-            case minus:
-                result = firstArgument - secondArgument;
-                break;
-            case multiply:
-                result = firstArgument * secondArgument;
-                break;
-            case division:
-                result = firstArgument / secondArgument;
-                break;
-        }
-        return result;
+        return switch (action) {
+            case plus -> firstArgument + secondArgument;
+            case minus -> firstArgument - secondArgument;
+            case multiply -> firstArgument * secondArgument;
+            case division -> firstArgument / secondArgument;
+        };
     }
 
 }

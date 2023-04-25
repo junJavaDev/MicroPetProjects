@@ -7,11 +7,16 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.View;
 
+import ru.junJavaDev.calculator.CalcActivity;
 import ru.junJavaDev.calculator.R;
 
 import ru.junJavaDev.calculator.TextActivity;
 
-public class EqualsLongClickListener implements View.OnLongClickListener {
+public class EqualsLongClickListener extends AbstractListener {
+
+    public EqualsLongClickListener(CalcActivity activity) {
+        super(activity);
+    }
 
     @SuppressLint("RtlHardcoded")
     @Override
