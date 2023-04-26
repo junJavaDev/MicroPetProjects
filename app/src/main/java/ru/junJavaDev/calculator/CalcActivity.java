@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.os.VibratorManager;
-import android.text.method.ArrowKeyMovementMethod;
 import android.view.Gravity;
 import android.widget.TextView;
 
@@ -25,19 +24,18 @@ import ru.junJavaDev.calculator.listeners.FunctionListener;
 import ru.junJavaDev.calculator.listeners.InputListener;
 
 public class CalcActivity extends AppCompatActivity {
-
     public static Action action = null;
     public static Double firstArgument = null;
     public static Double secondArgument = null;
     public static Double equals = null;
-    @SuppressLint("StaticFieldLeak")
-    public static TextView calcView;
     public static boolean isCalculation;
     public static DecimalFormat decimalFormat;
+    private TextView inputView;
+    private TextView actionView;
     private Vibrator vibrator;
     Buttons buttons;
 
-    @SuppressLint("SourceLockedOrientationActivity")
+    @SuppressLint({"SourceLockedOrientationActivity", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +46,8 @@ public class CalcActivity extends AppCompatActivity {
 
         decimalFormat = new DecimalFormat("###########.#########");
 
-        calcView = findViewById(R.id.screenDisplay);
-        calcView.setMovementMethod(new ArrowKeyMovementMethod());
+        inputView = findViewById(R.id.inputDisplay);
+        actionView = findViewById(R.id.actionDisplay);
 
         Buttons.setListener(buttons.getInputButtons(), new InputListener(this));
         Buttons.setListener(buttons.getActionButtons(), new ActionListener(this));
@@ -59,10 +57,10 @@ public class CalcActivity extends AppCompatActivity {
         buttons.getEqualsButton().setOnLongClickListener(new EqualsLongClickListener(this));
 
     }
-    public static Double getNumber() {
-        if (calcView.getText().charAt(0) == '~') {
-            return Double.parseDouble(calcView.getText().subSequence(1, calcView.length()).toString().replace(',', '.'));
-        } else return Double.parseDouble(calcView.getText().toString().replace(',', '.'));
+    public Double getNumber() {
+        if (inputView.getText().charAt(0) == '~') {
+            return Double.parseDouble(inputView.getText().subSequence(1, inputView.length()).toString().replace(',', '.'));
+        } else return Double.parseDouble(inputView.getText().toString().replace(',', '.'));
     }
 
     public void showResult(Double equals) {
@@ -72,14 +70,15 @@ public class CalcActivity extends AppCompatActivity {
                 equals > 0 && equals < 0.00000001 ||
                 equals < 0 && equals > -0.0000001
         ) {
-            calcView.setTextSize(25);
             this.reset();
-            calcView.setText(R.string.out_of_range);
+            buttons.setClickable(false);
+            inputView.setText(R.string.out_of_range);
+
         } else if (result.length() > 10) {
             result.insert(0, '~');
-            calcView.setText(result.subSequence(0, 11));
+            inputView.setText(result.subSequence(0, 11));
         } else {
-            calcView.setText(result);
+            inputView.setText(result);
         }
     }
 
@@ -100,8 +99,37 @@ public class CalcActivity extends AppCompatActivity {
         firstArgument = null;
         secondArgument = null;
         equals = null;
-        calcView.setTextSize(CALC_TEXT_SIZE);
-        calcView.setGravity(Gravity.CENTER);
-        calcView.setText(R.string.zero);
+        isCalculation = false;
+        inputView.setTextSize(CALC_TEXT_SIZE);
+        inputView.setGravity(Gravity.CENTER);
+        inputView.setText(R.string.zero);
+        actionView.setText("");
+        buttons.setClickable(true);
+    }
+
+    public Double calculateEquals() {
+        return switch (action) {
+            case plus -> firstArgument + secondArgument;
+            case minus -> firstArgument - secondArgument;
+            case multiply -> firstArgument * secondArgument;
+            case division -> firstArgument / secondArgument;
+        };
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void showAction() {
+        if (firstArgument != null && action != null) {
+            actionView.setText(decimalFormat.format(firstArgument) + " " + getString(action.symbol));
+        } else actionView.setText("");
+    }
+    @SuppressLint("SetTextI18n")
+    public void showEquals() {
+        if (firstArgument != null && action != null && secondArgument != null) {
+            actionView.setText(decimalFormat.format(firstArgument) + " " + getString(action.symbol) + " " + decimalFormat.format(secondArgument));
+        } else actionView.setText("");
+
+    }
+    public TextView getInputView() {
+        return inputView;
     }
 }

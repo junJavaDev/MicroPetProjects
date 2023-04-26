@@ -1,7 +1,6 @@
 package ru.junJavaDev.calculator.listeners;
 
 import static ru.junJavaDev.calculator.CalcActivity.action;
-import static ru.junJavaDev.calculator.CalcActivity.getNumber;
 import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
 import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
 import static ru.junJavaDev.calculator.CalcActivity.firstArgument;
@@ -23,22 +22,16 @@ public class EqualsListener extends AbstractListener {
         if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
         if (action != null) {
             if (!isCalculation) {
-                secondArgument = getNumber();
+                secondArgument = activity.getNumber();
                 isCalculation = true;
             }
-            equals = calculateEquals();
+            equals = activity.calculateEquals();
             activity.showResult(equals);
             firstArgument = equals;
+            activity.showEquals();
         }
     }
 
-    public static Double calculateEquals() {
-        return switch (action) {
-            case plus -> firstArgument + secondArgument;
-            case minus -> firstArgument - secondArgument;
-            case multiply -> firstArgument * secondArgument;
-            case division -> firstArgument / secondArgument;
-        };
-    }
+
 
 }

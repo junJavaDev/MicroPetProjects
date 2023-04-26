@@ -303,7 +303,7 @@
         android:layout_marginBottom="2dp"
         android:backgroundTint="@color/white"
         android:text="@string/plus"
-        android:textColor="@color/black"
+        android:textColor="#575757"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/btEquals"
         app:layout_constraintEnd_toEndOf="parent"
@@ -369,9 +369,9 @@
         app:layout_constraintStart_toEndOf="@+id/btDeciminalSeparator" />
 
     <TextView
-        android:id="@+id/screenDisplay"
+        android:id="@+id/inputDisplay"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="80dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="2dp"
         android:layout_marginBottom="2dp"
@@ -382,6 +382,23 @@
         app:layout_constraintBottom_toTopOf="@+id/btBackSpace"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/actionDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="#80000000"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/btPercent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

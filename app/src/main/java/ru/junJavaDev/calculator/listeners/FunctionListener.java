@@ -1,6 +1,5 @@
 package ru.junJavaDev.calculator.listeners;
 
-import static ru.junJavaDev.calculator.CalcActivity.getNumber;
 import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
 import static ru.junJavaDev.calculator.CalcActivity.firstArgument;
 
@@ -22,7 +21,7 @@ public class FunctionListener extends AbstractListener {
     @Override
     public void onClick(View view) {
         if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
-        secondArgument = getNumber();
+        secondArgument = activity.getNumber();
         switch (view.getId()) {
             case R.id.btFraction -> {
                 secondArgument = 1 / secondArgument;

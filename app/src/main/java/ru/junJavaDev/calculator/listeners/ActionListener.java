@@ -1,8 +1,6 @@
 package ru.junJavaDev.calculator.listeners;
 
-import static ru.junJavaDev.calculator.listeners.EqualsListener.calculateEquals;
 import static ru.junJavaDev.calculator.CalcActivity.firstArgument;
-import static ru.junJavaDev.calculator.CalcActivity.getNumber;
 import static ru.junJavaDev.calculator.CalcActivity.secondArgument;
 import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
 import static ru.junJavaDev.calculator.CalcActivity.equals;
@@ -23,33 +21,37 @@ public class ActionListener extends AbstractListener {
         super(activity);
     }
 
-    @SuppressLint("NonConstantResourceId")
+    @SuppressLint({"NonConstantResourceId", "SetTextI18n"})
     @Override
     public void onClick(View view) {
         if (vibrator.hasVibrator()) vibrator.vibrate(Setting.VIBRATOR_DELAY);
-        secondArgument = getNumber();
+        secondArgument = activity.getNumber();
         if (firstArgument == null || isCalculation) {
-            firstArgument = getNumber();
+            firstArgument = activity.getNumber();
         } else {
-            equals = calculateEquals();
+            equals = activity.calculateEquals();
             activity.showResult(equals);
             firstArgument = equals;
         }
         switch (view.getId()) {
             case R.id.btPlus -> {
                 action = Action.plus;
+                activity.showAction();
                 isCalculation = true;
             }
             case R.id.btMinus -> {
                 action = Action.minus;
+                activity.showAction();
                 isCalculation = true;
             }
             case R.id.btMultiply -> {
                 action = Action.multiply;
+                activity.showAction();
                 isCalculation = true;
             }
             case R.id.btDivision -> {
                 action = Action.division;
+                activity.showAction();
                 isCalculation = true;
             }
         }

@@ -1,10 +1,10 @@
 package ru.junJavaDev.calculator.listeners;
 
 import static ru.junJavaDev.calculator.CalcActivity.isCalculation;
-import static ru.junJavaDev.calculator.CalcActivity.calcView;
 
 import android.annotation.SuppressLint;
 import android.view.View;
+import android.widget.TextView;
 
 import ru.junJavaDev.calculator.CalcActivity;
 import ru.junJavaDev.calculator.R;
@@ -12,12 +12,8 @@ import ru.junJavaDev.calculator.R;
 import ru.junJavaDev.calculator.Setting;
 
 public class InputListener extends AbstractListener {
-    boolean isZero;
-    boolean isNegative;
-    boolean isZeroNegative;
-    boolean isApproximate;
-    CharSequence buffer;
 
+    private final TextView calcView = activity.getInputView();
     public InputListener(CalcActivity activity) {
         super(activity);
     }
@@ -33,12 +29,13 @@ public class InputListener extends AbstractListener {
             calcView.setText("0");
             isCalculation = false;
         }
-        isApproximate = calcView.getText().charAt(0) == '~';
-        isZero = calcView.getText().charAt(0) == '0' && calcView.length() == 1;
-        isNegative = calcView.getText().charAt(0) == '-';
-        isZeroNegative = isNegative && calcView.getText().charAt(1) == '0' && calcView.length() == 2;
+        boolean isApproximate = calcView.getText().charAt(0) == '~';
+        boolean isZero = calcView.getText().charAt(0) == '0' && calcView.length() == 1;
+        boolean isNegative = calcView.getText().charAt(0) == '-';
+        boolean isZeroNegative = isNegative && calcView.getText().charAt(1) == '0' && calcView.length() == 2;
 
 
+        CharSequence buffer;
         switch (view.getId()) {
 
             case R.id.btZero:

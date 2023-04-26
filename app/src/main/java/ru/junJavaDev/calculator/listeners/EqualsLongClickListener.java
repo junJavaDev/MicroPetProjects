@@ -1,7 +1,6 @@
 package ru.junJavaDev.calculator.listeners;
 
 import static android.view.Gravity.*;
-import static ru.junJavaDev.calculator.CalcActivity.calcView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,9 +20,9 @@ public class EqualsLongClickListener extends AbstractListener {
     @SuppressLint("RtlHardcoded")
     @Override
     public boolean onLongClick(View v) {
-        switch (calcView.getText().toString()) {
+        switch (activity.getInputView().getText().toString()) {
             case "88" -> showText(v, 25, LEFT, R.string.eighty_eight);
-            case "411" -> showText(v, 35, CENTER, R.string.love_story);
+            case "411" -> showText(v, 30, CENTER, R.string.love_story);
         }
         return false;
     }

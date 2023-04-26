@@ -1,5 +1,6 @@
 package ru.junJavaDev.calculator;
 
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 
@@ -7,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Buttons {
+    private boolean clickable = true;
     private final CalcActivity activity;
 
     public Buttons(CalcActivity activity) {
@@ -23,6 +25,19 @@ public class Buttons {
     private final Set<Button> functionButtons = new HashSet<>();
     private Button cleanAllButton;
     private Button equalsButton;
+
+    public void setClickable(boolean clickable) {
+        if (this.clickable != clickable) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                inputButtons.forEach(btn -> btn.setClickable(clickable));
+                actionButtons.forEach(btn -> btn.setClickable(clickable));
+                functionButtons.forEach(btn -> btn.setClickable(clickable));
+                equalsButton.setClickable(clickable);
+                equalsButton.setLongClickable(clickable);
+                this.clickable = clickable;
+            }
+        }
+    }
 
     public void addInputButtons() {
         inputButtons.addAll(Set.of (
