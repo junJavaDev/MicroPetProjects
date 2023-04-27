@@ -10,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
-import ru.junJavaDev.calculator.R;
-
 public class TextActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public static TextView textView;
