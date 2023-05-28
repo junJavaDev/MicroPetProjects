@@ -391,7 +391,7 @@
         android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="2dp"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
         android:text=""
         android:textColor="#80000000"
         android:textSize="50sp"
@@ -399,6 +399,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.08"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints,RtlHardcoded" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
