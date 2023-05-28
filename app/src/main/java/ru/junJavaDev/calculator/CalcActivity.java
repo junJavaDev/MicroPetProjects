@@ -118,16 +118,23 @@ public class CalcActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void showAction() {
-        if (firstArgument != null && action != null) {
-            actionView.setText(decimalFormat.format(firstArgument) + " " + getString(action.symbol));
-        } else actionView.setText("");
+        actionView.setText(getFirstArgAndActionText());
     }
     @SuppressLint("SetTextI18n")
     public void showEquals() {
-        if (firstArgument != null && action != null && secondArgument != null) {
-            actionView.setText(decimalFormat.format(firstArgument) + " " + getString(action.symbol) + " " + decimalFormat.format(secondArgument));
+        if (secondArgument != null) {
+            actionView.setText(getFirstArgAndActionText() + "\n" + decimalFormat.format(secondArgument));
         } else actionView.setText("");
+    }
 
+    private String getFirstArgAndActionText() {
+        if (firstArgument != null && action != null) {
+            String firstArg = decimalFormat.format(firstArgument);
+            if (firstArg.length() > 11) {
+                actionView.setText(firstArg.substring(0, 11));
+            }
+            return firstArg + " " + getString(action.symbol);
+        } else return "";
     }
     public TextView getInputView() {
         return inputView;
