@@ -45,7 +45,7 @@ public class Parser {
         description += driver
                 .findElement(By.cssSelector(DESCRIPTION_SELECTOR))
                 .getAttribute("outerHTML");
-        clazz = String.format("package ru.junjavadev.leetcode;\n\n/**\n%s\n**/\n\nclass %s {\n    \n}",
+        clazz = String.format("package ru.jvst.leetcode;\n\n/**\n%s\n**/\n\nclass %s {\n    \n}",
                 description, className);
 
 
@@ -64,15 +64,40 @@ public class Parser {
     }
 
     private static String convertToValidClassName(String text) {
-        // Оставляем только буквенные символы
-        String[] words = text.replaceAll("\\P{Alpha}+", " ").split("\\s+");
+        // Удаляем цифры в начале строки до первого спецсимвола
+        text = text.replaceFirst("^\\d+", "");
 
-        StringBuilder classNameBuilder = new StringBuilder();
+        // Удаляем все спецсимволы, кроме цифр и букв
+        text = text.replaceAll("[^\\p{L}\\p{N}\\s]", "");
+
+        // Преобразуем в camel case
+        String[] words = text.split("\\s+|(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        StringBuilder camelCaseText = new StringBuilder();
         for (String word : words) {
             if (!word.isEmpty()) {
-                classNameBuilder.append(word.substring(0, 1).toUpperCase()).append(word.substring(1).toLowerCase());  // преобразовать в CamelCase
+                camelCaseText.append(word.substring(0, 1).toUpperCase()).append(word.substring(1).toLowerCase());  // преобразовать в CamelCase
             }
         }
-        return classNameBuilder.toString();
+        text = camelCaseText.toString();
+
+        // Переносим цифры с начала в конец
+        String nonDigitPart = "";
+        String digitPart = "";
+        int indexFirstLetter = text.length();
+        for (int i = 0; i < text.length(); i++) {
+            if (Character.isDigit(text.charAt(i))) {
+                if (indexFirstLetter == text.length()) {
+                    digitPart += text.charAt(i);
+                } else {
+                    nonDigitPart += text.charAt(i);
+                }
+            } else {
+                indexFirstLetter = i;
+                nonDigitPart += text.charAt(i);
+            }
+        }
+        text = nonDigitPart + digitPart;
+
+        return text;
     }
 }
