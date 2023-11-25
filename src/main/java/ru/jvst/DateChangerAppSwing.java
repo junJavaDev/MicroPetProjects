@@ -31,16 +31,17 @@ public class DateChangerAppSwing {
 
         updateDayDropdown(yearDropdown, monthDropdown, dayDropdown);
 
-        datePanel.add(yearDropdown);
-        datePanel.add(monthDropdown);
         datePanel.add(dayDropdown);
+        datePanel.add(monthDropdown);
+        datePanel.add(yearDropdown);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(420, 40));
         JButton executeButton = new JButton("Обновить");
-        executeButton.setPreferredSize(new Dimension(120, 30));
+        executeButton.setPreferredSize(new Dimension(130, 33));
         JButton executeNextButton = new JButton("Обновить++");
-        executeNextButton.setPreferredSize(new Dimension(120, 30));
+        executeNextButton.setPreferredSize(new Dimension(130, 33));
+
         buttonPanel.add(executeButton);
         buttonPanel.add(executeNextButton);
 
