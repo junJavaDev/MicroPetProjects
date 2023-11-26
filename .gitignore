@@ -20,7 +20,6 @@ local.properties
 *.tar.gz
 *.rar
 hs_err_pid*
-gradle.properties
 gradle/
 gradlew
 gradlew.bat

@@ -11,7 +11,7 @@ android {
             keyPassword "keyPassword"
         }
     }
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId 'ru.junJavaDev.calculator'
