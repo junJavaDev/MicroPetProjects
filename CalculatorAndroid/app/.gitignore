@@ -1,6 +1,4 @@
 /build
 /release
-build.gradle
 local.properties
-proguard-rules.pro
 .idea
