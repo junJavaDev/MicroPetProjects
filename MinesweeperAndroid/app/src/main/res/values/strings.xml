@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Minesweeper</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="bombs_count">Бомбы:</string>
+    <string name="be_careful">Будь вниметелен</string>
+    <string name="you_lose">ТЫ ПРОИГРАЛ! BIG BA-DA-BOOM!</string>
+    <string name="you_win">РАЗМИНИРОВАНО!</string>
+    <string name="lose">Взорвался!</string>
+    <string name="win">Победа!</string>
+    <string name="victory_win">Поздравляю, любимая! Одна победа на сегодня уже есть!</string>
+    <string name="victory_lose">Не расстраивайся, солнце! Твой день будет замечательным!</string>
+    <string name="start">Старт</string>
+    <string name="easy">Новичок</string>
+    <string name="medium">Любитель</string>
+    <string name="hard">Профессионал</string>
+    <string name="rows">Строки</string>
+    <string name="columns">Столбцы</string>
+    <string name="bombs">Бомбы</string>
+    <string name="check_hard">Выберите желаемый уровень или настройте сложность вручную</string>
+    <string name="default_value">10</string>
+</resources>
