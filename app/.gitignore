@@ -1,3 +1,4 @@
 /build
-build.grandle
-proguard-rules.pro
+/release
+local.properties
+.idea
