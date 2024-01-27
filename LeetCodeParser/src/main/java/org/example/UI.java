@@ -33,7 +33,7 @@ public class UI {
                 String clipboardText = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
                 result = Parser.parse(clipboardText);
                 copyToClipboard(result[0]);
-            } catch (UnsupportedFlavorException | IOException ex) {
+            } catch (UnsupportedFlavorException | IOException | InterruptedException ex) {
                 ex.printStackTrace();
             }
         });

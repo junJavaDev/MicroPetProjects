@@ -1,5 +1,6 @@
 package org.example;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,32 +9,44 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
+
 public class Parser {
 
     private static final String DESCRIPTION_SELECTOR = "div[data-track-load=description_content]";
-    private static final String LINK_SELECTOR = "a.text-lg.font-medium";
-    private static final String DRIVER = "webdriver.chrome.driver";
-    private static final String DRIVER_PATH = "chrome/chromedriver";
+    private static final String LINK_SELECTOR = "a.no-underline.truncate.cursor-text.whitespace-normal";
     private static final String CHROME_OPTIONS = "--headless";
+    private static final String ENABLE_DYNAMIC_LAYOUT_XPATH = "//*[text()='Enable Dynamic Layout']";
+    private static final String SKIP_TOUR_XPATH = "//*[text()='Skip tour']";
 
-
-    public static String[] parse(String fullUrl) {
-        String clazz = "";
-        String commit = "";
-
+    public static String[] parse(String fullUrl) throws InterruptedException {
+        String clazz;
+        String commit;
+        WebDriverManager.chromedriver().setup();
 
         // ЗАПУСК
-        System.setProperty(DRIVER, DRIVER_PATH);
+//        System.setProperty(DRIVER, DRIVER_PATH);
         ChromeOptions options = new ChromeOptions();
         options.addArguments(CHROME_OPTIONS);
         WebDriver driver = new ChromeDriver(options);
         String url = trimUrl(fullUrl);
         driver.get(url);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
 
-        WebDriverWait wait = new WebDriverWait(driver, 5);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(DESCRIPTION_SELECTOR)));
+        waitUntilByXpath(wait, ENABLE_DYNAMIC_LAYOUT_XPATH);
+        WebElement enableLayoutButton = driver.findElement(By.xpath(ENABLE_DYNAMIC_LAYOUT_XPATH));
+        if (enableLayoutButton != null) {
+            enableLayoutButton.click();
+        }
+
+        waitUntilByXpath(wait, SKIP_TOUR_XPATH);
+        WebElement skipTourButton = driver.findElement(By.xpath(SKIP_TOUR_XPATH));
+        if (skipTourButton != null) {
+            skipTourButton.click();
+        }
 
         // ССЫЛКА
+        waitUntilByCssSelector(wait, LINK_SELECTOR);
         WebElement linkElement = driver.findElement(By.cssSelector(LINK_SELECTOR));
         String linkText = linkElement.getText();
 
@@ -54,13 +67,29 @@ public class Parser {
 
         driver.quit();
 
-        return new String[] {clazz, commit};
+        return new String[]{clazz, commit};
     }
 
     private static String trimUrl(String inputUrl) {
         int idx = inputUrl.indexOf('?');
         if (idx < 0) return inputUrl;
         return inputUrl.substring(0, idx);
+    }
+
+    private static void waitUntilByXpath(WebDriverWait wait, String xpath) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+        } catch (Exception e) {
+            System.out.println("Элемент " + xpath + " не найден на странице");
+        }
+    }
+
+    private static void waitUntilByCssSelector(WebDriverWait wait, String cssSelector) {
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(LINK_SELECTOR)));
+        } catch (Exception e) {
+            System.out.println("Элемент " + cssSelector + " не найден на странице");
+        }
     }
 
     private static String convertToValidClassName(String text) {
@@ -81,22 +110,22 @@ public class Parser {
         text = camelCaseText.toString();
 
         // Переносим цифры с начала в конец
-        String nonDigitPart = "";
-        String digitPart = "";
+        StringBuilder nonDigitPart = new StringBuilder();
+        StringBuilder digitPart = new StringBuilder();
         int indexFirstLetter = text.length();
         for (int i = 0; i < text.length(); i++) {
             if (Character.isDigit(text.charAt(i))) {
                 if (indexFirstLetter == text.length()) {
-                    digitPart += text.charAt(i);
+                    digitPart.append(text.charAt(i));
                 } else {
-                    nonDigitPart += text.charAt(i);
+                    nonDigitPart.append(text.charAt(i));
                 }
             } else {
                 indexFirstLetter = i;
-                nonDigitPart += text.charAt(i);
+                nonDigitPart.append(text.charAt(i));
             }
         }
-        text = nonDigitPart + digitPart;
+        text = nonDigitPart.toString() + digitPart;
 
         return text;
     }
