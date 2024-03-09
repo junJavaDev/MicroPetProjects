@@ -16,8 +16,6 @@ public class Parser {
     private static final String DESCRIPTION_SELECTOR = "div[data-track-load=description_content]";
     private static final String LINK_SELECTOR = "a.no-underline.truncate.cursor-text.whitespace-normal";
     private static final String CHROME_OPTIONS = "--headless";
-    private static final String ENABLE_DYNAMIC_LAYOUT_XPATH = "//*[text()='Enable Dynamic Layout']";
-    private static final String SKIP_TOUR_XPATH = "//*[text()='Skip tour']";
 
     public static String[] parse(String fullUrl) throws InterruptedException {
         String clazz;
@@ -25,29 +23,14 @@ public class Parser {
         WebDriverManager.chromedriver().setup();
 
         // ЗАПУСК
-//        System.setProperty(DRIVER, DRIVER_PATH);
         ChromeOptions options = new ChromeOptions();
         options.addArguments(CHROME_OPTIONS);
-        WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = new ChromeDriver();
         String url = trimUrl(fullUrl);
         driver.get(url);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
-
-        waitUntilByXpath(wait, ENABLE_DYNAMIC_LAYOUT_XPATH);
-        WebElement enableLayoutButton = driver.findElement(By.xpath(ENABLE_DYNAMIC_LAYOUT_XPATH));
-        if (enableLayoutButton != null) {
-            enableLayoutButton.click();
-        }
-
-        waitUntilByXpath(wait, SKIP_TOUR_XPATH);
-        WebElement skipTourButton = driver.findElement(By.xpath(SKIP_TOUR_XPATH));
-        if (skipTourButton != null) {
-            skipTourButton.click();
-        }
-
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         // ССЫЛКА
-        waitUntilByCssSelector(wait, LINK_SELECTOR);
-        WebElement linkElement = driver.findElement(By.cssSelector(LINK_SELECTOR));
+        WebElement linkElement = waitUntilAndGetByCssSelector(driver, wait, LINK_SELECTOR);
         String linkText = linkElement.getText();
 
         // ИМЯ КЛАССА
@@ -64,7 +47,6 @@ public class Parser {
 
         // КОММИТ
         commit = String.format("LeetCode \"%s\" done", linkText);
-
         driver.quit();
 
         return new String[]{clazz, commit};
@@ -76,20 +58,24 @@ public class Parser {
         return inputUrl.substring(0, idx);
     }
 
-    private static void waitUntilByXpath(WebDriverWait wait, String xpath) {
+    private static WebElement waitUntilAndGetByXpath(WebDriver driver, WebDriverWait wait, String xpath) {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
+            return driver.findElement(By.xpath(xpath));
         } catch (Exception e) {
             System.out.println("Элемент " + xpath + " не найден на странице");
         }
+        return null;
     }
 
-    private static void waitUntilByCssSelector(WebDriverWait wait, String cssSelector) {
+    private static WebElement waitUntilAndGetByCssSelector(WebDriver driver, WebDriverWait wait, String cssSelector) {
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(LINK_SELECTOR)));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
+            return driver.findElement(By.cssSelector(cssSelector));
         } catch (Exception e) {
             System.out.println("Элемент " + cssSelector + " не найден на странице");
         }
+        return null;
     }
 
     private static String convertToValidClassName(String text) {
